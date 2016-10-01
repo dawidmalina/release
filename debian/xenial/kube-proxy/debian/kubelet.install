@@ -1,0 +1,2 @@
+usr/bin/kube-proxy usr/bin/
+lib/systemd/system/kube-proxy.service lib/systemd/system/
