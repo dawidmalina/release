@@ -15,4 +15,4 @@ ADD . /src
 
 WORKDIR /src
 
-CMD ["go", "run", "/src/build.go"]
+CMD ["go", "run", "/src/simple-build.go"]
