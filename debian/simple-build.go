@@ -198,7 +198,7 @@ func main() {
                                         Revision: "00",
                                         Stable:   true,
                                 },
-                                {
+                        },
                 },
 		{
 			Package: "kubelet",
@@ -209,7 +209,7 @@ func main() {
 					Revision: "00",
 					Stable:   true,
 				},
-			},
+                        },
 		},
 	}
 
