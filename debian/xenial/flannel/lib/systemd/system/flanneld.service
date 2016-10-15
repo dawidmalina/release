@@ -1,0 +1,12 @@
+[Unit]
+Description=flannel is an etcd backed overlay network for containers
+Documentation=https://github.com/coreos/flannel
+
+[Service]
+ExecStart=/usr/bin/flannel
+Restart=always
+StartLimitInterval=0
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
