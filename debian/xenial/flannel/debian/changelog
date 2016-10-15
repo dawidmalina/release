@@ -1,0 +1,6 @@
+flannel ({{ .Version }}-{{ .Revision }}) {{ .DistroName }} {{ .Arch }}; urgency=optional
+
+  * https://github.com/coreos/flannel/releases
+
+ -- Kubernetes Authors <kubernetes-dev@googlegroups.com>  {{ date }}
+

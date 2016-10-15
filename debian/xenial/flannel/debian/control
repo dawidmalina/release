@@ -1,0 +1,14 @@
+Source: flannel
+Section: misc
+Priority: optional
+Maintainer: Kubernetes Authors <kubernetes-dev+release@googlegroups.com>
+Build-Depends: curl, ca-certificates, debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://coreos.com/flannel/docs/latest/
+Vcs-Git: https://github.com/coreos/flannel.git
+Vcs-Browser: https://github.com/coreos/flannel
+
+Package: flannel
+Architecture: {{ .DebArch }}
+Depends: ${misc:Depends}
+Description: Flannel is virtual network that gives a subnet to each host for use with container runtimes
