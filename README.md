@@ -140,6 +140,7 @@ You can build the rpm packages in a Docker container with:
 
 ```
 cd rpm
+docker build --tag=kubelet-rpm-builder .
 ./docker-build.sh.
 ```
 
