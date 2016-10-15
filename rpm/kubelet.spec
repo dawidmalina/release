@@ -1,5 +1,5 @@
-%global KUBE_VERSION 1.4.0
-%global CNI_RELEASE 07a8a28637e97b22eb8dfe710eeae1344f69d16e
+%global KUBE_VERSION 1.3.8
+%global FLANNEL_VERSION 0.6.2
 %global RPM_RELEASE 0
 
 Name: kubelet
@@ -21,16 +21,6 @@ Requires: ethtool
 %description
 The node agent of Kubernetes, the container cluster manager.
 
-%package -n kubernetes-cni
-
-Version: 0.3.0.1
-Release: %{RPM_RELEASE}.07a8a2
-Summary: Binaries required to provision kubernetes container networking
-Requires: kubelet
-
-%description -n kubernetes-cni
-Binaries required to provision container networking.
-
 %package -n kubectl
 
 Summary: Command-line utility for interacting with a Kubernetes cluster.
@@ -38,17 +28,19 @@ Summary: Command-line utility for interacting with a Kubernetes cluster.
 %description -n kubectl
 Command-line utility for interacting with a Kubernetes cluster.
 
-%package -n kubeadm
+%package -n kube-proxy
 
-Version: 1.5.0
-Release: %{RPM_RELEASE}.alpha.0.1534.gcf7301f
-Summary: Command-line utility for administering a Kubernetes cluster. (ALPHA)
-Requires: kubelet >= 1.4.0
-Requires: kubectl >= 1.4.0
-Requires: kubernetes-cni
+Summary: Command-line utility for interacting with a Kubernetes cluster.
 
-%description -n kubeadm
-Command-line utility for administering a Kubernetes cluster.
+%description -n kube-proxy
+Command-line utility for interacting with a Kubernetes cluster.
+
+%package -n flannel
+
+Summary: Flannel is virtual network that gives a subnet to each host for use with container runtimes.
+
+%description -n flannel
+Command-line utility for interacting with a Kubernetes cluster.
 
 %prep
 # Assumes the builder has overridden sourcedir to point to directory
@@ -58,7 +50,8 @@ Command-line utility for administering a Kubernetes cluster.
 # Example: rpmbuild --define "_sourcedir $PWD" -bb kubelet.spec
 #
 cp -p %{_sourcedir}/kubelet.service %{_builddir}/
-cp -p %{_sourcedir}/10-kubeadm.conf %{_builddir}/
+cp -p %{_sourcedir}/kube-proxy.service %{_builddir}/
+cp -p %{_sourcedir}/flanneld.service %{_builddir}/
 
 # NOTE: Uncomment if you have these binaries in the directory you're building from.
 # This is a useful temporary hack for faster Docker builds when working on the spec.
@@ -72,24 +65,20 @@ cp -p %{_sourcedir}/10-kubeadm.conf %{_builddir}/
 
 curl -L --fail "https://storage.googleapis.com/kubernetes-release/release/v%{KUBE_VERSION}/bin/linux/amd64/kubelet" -o kubelet
 curl -L --fail "https://storage.googleapis.com/kubernetes-release/release/v%{KUBE_VERSION}/bin/linux/amd64/kubectl" -o kubectl
-curl -L --fail "https://storage.googleapis.com/kubeadm/v1.5.0-alpha.0-1534-gcf7301f/bin/linux/amd64/kubeadm" -o kubeadm
+curl -L --fail "https://storage.googleapis.com/kubernetes-release/release/v%{KUBE_VERSION}/bin/linux/amd64/kube-proxy" -o kube-proxy
+curl -L --fail "https://github.com/coreos/flannel/releases/download/v%{FLANNEL_VERSION}/flanneld-amd64" -o flanneld
 
 install -m 755 -d %{buildroot}%{_bindir}
 install -m 755 -d %{buildroot}%{_sysconfdir}/systemd/system/
-install -m 755 -d %{buildroot}%{_sysconfdir}/systemd/system/kubelet.service.d/
-install -m 755 -d %{buildroot}%{_sysconfdir}/cni/net.d/
 install -m 755 -d %{buildroot}%{_sysconfdir}/kubernetes/manifests/
 install -m 755 -d %{buildroot}/var/lib/kubelet/
 install -p -m 755 -t %{buildroot}%{_bindir}/ kubelet
 install -p -m 755 -t %{buildroot}%{_bindir}/ kubectl
-install -p -m 755 -t %{buildroot}%{_bindir}/ kubeadm
+install -p -m 755 -t %{buildroot}%{_bindir}/ kube-proxy
+install -p -m 755 -t %{buildroot}%{_bindir}/ flanneld
 install -p -m 755 -t %{buildroot}%{_sysconfdir}/systemd/system/ kubelet.service
-install -p -m 755 -t %{buildroot}%{_sysconfdir}/systemd/system/kubelet.service.d/ 10-kubeadm.conf
-
-
-install -m 755 -d %{buildroot}/opt/cni
-curl -sSL --fail --retry 5 https://storage.googleapis.com/kubernetes-release/network-plugins/cni-amd64-%{CNI_RELEASE}.tar.gz | tar xz
-mv bin/ %{buildroot}/opt/cni/
+install -p -m 755 -t %{buildroot}%{_sysconfdir}/systemd/system/ kube-proxy.service
+install -p -m 755 -t %{buildroot}%{_sysconfdir}/systemd/system/ flanneld.service
 
 
 %files
@@ -97,15 +86,16 @@ mv bin/ %{buildroot}/opt/cni/
 %{_sysconfdir}/systemd/system/kubelet.service
 %{_sysconfdir}/kubernetes/manifests/
 
-%files -n kubernetes-cni
-/opt/cni
+%files -n kube-proxy
+%{_bindir}/kube-proxy
+%{_sysconfdir}/systemd/system/kube-proxy.service
+
+%files -n flannel
+%{_bindir}/flanneld
+%{_sysconfdir}/systemd/system/flanneld.service
 
 %files -n kubectl
 %{_bindir}/kubectl
-
-%files -n kubeadm
-%{_bindir}/kubeadm
-%{_sysconfdir}/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 %doc
 
