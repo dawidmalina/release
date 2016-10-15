@@ -183,7 +183,7 @@ func main() {
 			Distros: allDistros,
 			Versions: []version{
 				{
-					Version:  "1.3.8",
+					Version:  "1.3.4",
 					Revision: "00",
 					Stable:   true,
 				},
@@ -194,7 +194,7 @@ func main() {
                         Distros: serverDistros,
                         Versions: []version{
                                 {
-                                        Version:  "1.3.8",
+                                        Version:  "1.3.4",
                                         Revision: "00",
                                         Stable:   true,
                                 },
@@ -205,12 +205,23 @@ func main() {
 			Distros: serverDistros,
 			Versions: []version{
 				{
-					Version:  "1.3.8",
+					Version:  "1.3.4",
 					Revision: "00",
 					Stable:   true,
 				},
                         },
 		},
+                {
+                        Package: "flannel",
+                        Distros: serverDistros,
+                        Versions: []version{
+                                {
+                                        Version:  "0.6.2",
+                                        Revision: "00",
+                                        Stable:   true,
+                                },
+                        },
+                },
 	}
 
 	if err := walkBuilds(builds, func(pkg, distro, arch string, v version) error {
