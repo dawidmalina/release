@@ -36,6 +36,7 @@ Summary: Command-line utility for interacting with a Kubernetes cluster.
 Command-line utility for interacting with a Kubernetes cluster.
 
 %package -n flannel
+Version: %{FLANNEL_VERSION}
 
 Summary: Flannel is virtual network that gives a subnet to each host for use with container runtimes.
 
