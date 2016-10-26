@@ -1,0 +1,14 @@
+Source: etcd
+Section: misc
+Priority: optional
+Maintainer: Kubernetes Authors <kubernetes-dev+release@googlegroups.com>
+Build-Depends: curl, ca-certificates, debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://coreos.com/etcd/docs/latest/
+Vcs-Git: https://github.com/coreos/etcd.git
+Vcs-Browser: https://github.com/coreos/etcd
+
+Package: etcd
+Architecture: {{ .DebArch }}
+Depends: ${misc:Depends}
+Description: Etcd is a distributed, consistent key-value store for shared configuration and service discovery

@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+#export DH_VERBOSE=1
+
+build:
+	echo noop
+
+binary:
+	mkdir -p usr/bin
+	curl  --fail -sS -L \
+		-o etcd.tar.gz \
+		"https://github.com/coreos/etcd/releases/download/v{{ .Version }}/etcd-v{{ .Version }}-linux-{{ .Arch }}.tar.gz"
+	tar -xzf etcd.tar.gz
+	cp -v etcd-v{{ .Version }}-linux-{{ .Arch }}/etcd usr/bin/etcd
+	cp -v etcd-v{{ .Version }}-linux-{{ .Arch }}/etcdctl usr/bin/etcdctl
+	chmod +x usr/bin/etcd*
+	rm -rf etcd.tar.gz etcd-v{{ .Version }}-linux-{{ .Arch }}
+	dh_testroot
+	dh_auto_install
+	dh_shlibdeps
+	dh_install
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+%:
+	dh $@

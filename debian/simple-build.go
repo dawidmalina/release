@@ -211,18 +211,31 @@ func main() {
 				},
                         },
 		},
-                {
-                        Package: "flannel",
-                        Distros: serverDistros,
-                        Versions: []version{
-                                {
-                                        Version:  "0.6.2",
-                                        Revision: "00",
-                                        Stable:   true,
-                                },
+        {
+                Package: "flannel",
+                Distros: serverDistros,
+                Versions: []version{
+                        {
+                                Version:  "0.6.2",
+                                Revision: "00",
+                                Stable:   true,
                         },
                 },
+        },
+        {
+                Package: "etcd",
+                Distros: serverDistros,
+                Versions: []version{
+                        {
+                                Version:  "2.3.7",
+                                Revision: "00",
+                                Stable:   true,
+                        },
+                },
+        },
 	}
+
+
 
 	if err := walkBuilds(builds, func(pkg, distro, arch string, v version) error {
 		c := cfg{
