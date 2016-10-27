@@ -1,2 +1,3 @@
 usr/bin/etcd usr/bin/
 usr/bin/etcdctl usr/bin/
+lib/systemd/system/etcd.service lib/systemd/system/
