@@ -183,7 +183,7 @@ func main() {
 			Distros: allDistros,
 			Versions: []version{
 				{
-					Version:  "1.3.9",
+					Version:  "1.3.10",
 					Revision: "00",
 					Stable:   true,
 				},
@@ -194,7 +194,7 @@ func main() {
                         Distros: serverDistros,
                         Versions: []version{
                                 {
-                                        Version:  "1.3.9",
+                                        Version:  "1.3.10",
                                         Revision: "00",
                                         Stable:   true,
                                 },
@@ -205,7 +205,7 @@ func main() {
 			Distros: serverDistros,
 			Versions: []version{
 				{
-					Version:  "1.3.9",
+					Version:  "1.3.10",
 					Revision: "00",
 					Stable:   true,
 				},

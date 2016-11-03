@@ -1,4 +1,4 @@
-%global KUBE_VERSION 1.3.9
+%global KUBE_VERSION 1.3.10
 %global FLANNEL_VERSION 0.6.2
 %global ETCD_VERSION 2.3.7
 %global RPM_RELEASE 0
